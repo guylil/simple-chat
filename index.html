@@ -6,10 +6,16 @@
 </head>
 <body>
 <h1>Welcome to my chat channel</h1>
+
+<div class="sidebar">
+    Connected users:
+    <ul id="users"></ul>
+</div>
 <ul id="messages"></ul>
 <form action="" onsubmit="return false">
     <input id="message" autocomplete="off" /><button>Send</button>
 </form>
+
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font: 13px Helvetica, Arial; }
@@ -19,7 +25,11 @@
     #messages { list-style-type: none; margin: 0; padding: 0; }
     #messages li { padding: 5px 10px; }
     #messages li:nth-child(odd) { background: #eee; }
+    #users { list-style-type: none; margin: 10px; padding: 0; }
+    #users li { padding: 5px 10px; }
+    .sidebar { float: right; background-color: white; padding: 5px}
 </style>
+
 <script src="/socket.io/socket.io.js"></script>
 <script>let socket = io();</script>
 <script>
@@ -37,7 +47,18 @@
         let li = document.createElement("li");
         li.innerText = msg;
         msgs.append(li);
-    })
+    });
+    socket.on('users list', function (usersList) {
+        let users = document.getElementById("users");
+        while (users.firstChild) {
+            users.removeChild(users.firstChild);
+        }
+        usersList.forEach(userName => {
+            let li = document.createElement("li");
+            li.innerText = userName;
+            users.append(li);
+        })
+    });
 </script>
 </body>
 </html>
