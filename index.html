@@ -5,7 +5,7 @@
     <title>Chat</title>
 </head>
 <body>
-<h1>Welcome to my chat channel</h1>
+<h1>Welcome to my chat channel:</h1>
 
 <div class="sidebar">
     Connected users:
@@ -48,7 +48,9 @@
         li.innerText = msg;
         msgs.append(li);
     });
+    // let myId = null;
     socket.on('users list', function (usersList) {
+        // if (!myId) {myId = usersList[usersList.length-1]}
         let users = document.getElementById("users");
         while (users.firstChild) {
             users.removeChild(users.firstChild);

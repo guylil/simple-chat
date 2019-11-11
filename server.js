@@ -27,7 +27,7 @@ io.on('connection', function(socket){
         io.emit('users list', userNames);
     });
     socket.on('chat message', function(msg){
-        io.emit('chat message', msg);
+        io.emit('chat message', `${socket.id.slice(-4)}: ${msg}`);
         console.log('id: ',socket.id,' message: ' + msg);
     });
 });
